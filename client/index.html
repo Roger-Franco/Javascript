@@ -63,8 +63,8 @@
     <script src="app/domain/negociacao/Negociacao.js"></script>
     <script>
         var n1 = new Negociacao(new Date(), 5, 700);
-        n1.quantidade = 1000; // instrução é ignorada, sem mensagem d
-        n1._quantidade = 5000;
+        n1.quantidade = 1000; // instrução é ignorada, sem mensagem de erro
+        n1._quantidade = 5000;  // nada nos impede de fazermos isso, apenas nossa convenção
         console.log(n1.quantidade);
         console.log(n1.data);
         console.log(n1.valor);
