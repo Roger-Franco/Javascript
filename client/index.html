@@ -62,23 +62,12 @@
     </table>
     <script src="app/domain/negociacao/Negociacao.js"></script>
     <script>
-        var n1 = new Negociacao(new Date(), 5, 700);
+        var hoje = new Date();
+        var n1 = new Negociacao(hoje, 5, 700);
         console.log(n1.data);
-        var outroDia = new Date();
-
-        // setDate permite alterar o dia de uma data
-        outroDia.setDate(11);
-        n1.data = outroDia;
+        // altera a data que foi armazenada em Negociacao também
+        hoje.setDate(11);
         console.log(n1.data);
-        n1.data.setDate(11);
-        console.log(n1.data);
-
-        console.log(n1.quantidade);
-        console.log(n1.data);
-        console.log(n1.valor);
-        console.log(n1.volume);
-
-
     </script>
 </body>
 
