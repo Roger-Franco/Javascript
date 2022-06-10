@@ -11,18 +11,13 @@ class NegociacaoController {
     event.preventDefault();
 
     let data = new Date(...this._inputData.value.split('-')
-      // .map(function (item, indice) {
-      //   // lembre-se de que arrays começam com índice 0,
-      //   // logo, 1 é o segundo elemento!
-      //   if (indice === 1) {
-      //     return item - 1
-      //   }
-      //   return item
-      // })
-      .map(function (item, indice) {
-        return item - indice % 2; // essa forma com menos código
-      })
+      .map((item, indice) => item - indice % 2)
     );
-    console.log(data);
+    let negociacao = new Negociacao(
+      data,
+      parseInt(this._inputQuantidade.value),
+      parseFloat(this._inputValor.value),
+    )
+    console.log(negociacao);
   }
 }
