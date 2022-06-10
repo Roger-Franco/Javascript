@@ -9,9 +9,20 @@ class NegociacaoController {
   }
   adiciona(event) {
     event.preventDefault();
-    // precisamos acessar as propriedades através de this
-    console.log(this._inputData.value);
-    console.log(parseInt(this._inputQuantidade.value));
-    console.log(parseFloat(this._inputValor.value));
+
+    let data = new Date(...this._inputData.value.split('-')
+      // .map(function (item, indice) {
+      //   // lembre-se de que arrays começam com índice 0,
+      //   // logo, 1 é o segundo elemento!
+      //   if (indice === 1) {
+      //     return item - 1
+      //   }
+      //   return item
+      // })
+      .map(function (item, indice) {
+        return item - indice % 2; // essa forma com menos código
+      })
+    );
+    console.log(data);
   }
 }
