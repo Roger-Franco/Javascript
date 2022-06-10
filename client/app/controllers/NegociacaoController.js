@@ -1,26 +1,17 @@
 
 class NegociacaoController {
-  adiciona(event) {
-    // cancelando a submissão do formulário
-    event.preventDefault();
-    // buscando os elementos
-    // let inputData = document.querySelector('#data');
-    // let inputQuantidade = document.querySelector('#quantidade');
-    // let inputValor = document.querySelector('#valor');
-
-    // a ideia é que $ seja o querySelector
+  constructor() {
     let $ = document.querySelector.bind(document); // precisei adicionar o .bind(document);
 
-    let inputData = $('#data');
-    let inputQuantidade = $('#quantidade');
-    let inputValor = $('#valor');
-
-
-    console.log(inputData.value);
-    console.log(inputQuantidade.value);
-    console.log(parseInt(inputQuantidade.value));
-    console.log(parseFloat(inputValor.value));
-
-
+    this._inputData = $('#data');
+    this._inputQuantidade = $('#quantidade');
+    this._inputValor = $('#valor');
+  }
+  adiciona(event) {
+    event.preventDefault();
+    // precisamos acessar as propriedades através de this
+    console.log(this._inputData.value);
+    console.log(parseInt(this._inputQuantidade.value));
+    console.log(parseFloat(this._inputValor.value));
   }
 }

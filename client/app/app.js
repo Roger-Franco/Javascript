@@ -9,4 +9,5 @@ document
   //   controller.adiciona(event);
   // });
   //  Ou pode ser como abaixo. Menos verboso
-  .addEventListener('submit', controller.adiciona);
+  // bind aqui!
+  .addEventListener('submit', controller.adiciona.bind(controller));
