@@ -43,23 +43,9 @@
     </div>
     <br>
     <br>
+    <div id="negociacoes"></div>
+    <!-- entrou no mesmo local onde tínhamos a <table> -->
 
-    <table class="table table-hover table-bordered">
-        <thead>
-            <tr>
-                <th>DATA</th>
-                <th>QUANTIDADE</th>
-                <th>VALOR</th>
-                <th>VOLUME</th>
-            </tr>
-        </thead>
-
-        <tbody>
-        </tbody>
-
-        <tfoot>
-        </tfoot>
-    </table>
     <script src="app/domain/negociacao/Negociacao.js"></script>
     <script src="app/controllers/NegociacaoController.js"></script>
     <script src="app/ui/converters/DateConverter.js"></script>
@@ -67,6 +53,7 @@
     <!-- app.js agora sempre será o último script porque ele é o resp
         onsável em instanciar NegociacaoController que por conseguinte de
         pende de outras classes -->
+    <script src="app/ui/views/NegociacoesView.js"></script>
     <script src="app/app.js"></script>
 </body>
 
