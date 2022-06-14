@@ -9,11 +9,12 @@ class NegociacaoController {
     // passamos para o construtor o seletor CSS de ID
     this._negociacoesView = new NegociacoesView('#negociacoes');
     // atualizando a view
-    this._negociacoesView.update();
+    this._negociacoesView.update(this._negociacoes);
   }
   adiciona(event) {
     event.preventDefault();
     this._negociacoes.adiciona(this._criaNegociacao())
+    this._negociacoesView.update(this._negociacoes);
     this._limpaFormulario();
   }
   _limpaFormulario() {
