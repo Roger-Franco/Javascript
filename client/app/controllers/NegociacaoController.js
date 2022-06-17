@@ -6,10 +6,29 @@ class NegociacaoController {
     this._inputData = $('#data');
     this._inputQuantidade = $('#quantidade');
     this._inputValor = $('#valor');
-    // this._negociacoes = new Negociacoes(model => {
-    //   console.log(this);
-    //   this._negociacoesView.update(model);
-    // });
+
+    // guardando uma referência
+    // para a instância de NegociacaoController
+    const self = this;
+    this._negociacoes = new Proxy(new Negociacoes(), {
+      get(target, prop, receiver) {
+        if (typeof (target[prop]) == typeof (Function) && ['adiciona', 'esvazia']
+          .includes(prop)) {
+          return function () {
+            console.log(`"${prop}" disparou a armadilha`);
+            target[prop].apply(target, arguments);
+            // target é a instância real de Negociacoes
+            // contudo, TEREMOS PROBLEMAS AQUI!
+            // this._negociacoesView.update(target);
+            // AGORA USA SELF!
+            self._negociacoesView.update(target);
+
+          }
+        } else {
+          return target[prop];
+        }
+      }
+    });
     // passamos para o construtor o seletor CSS de ID
     this._negociacoesView = new NegociacoesView('#negociacoes');
     // atualizando a view

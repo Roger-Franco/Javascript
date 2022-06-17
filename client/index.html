@@ -62,24 +62,6 @@
     <script src="app/ui/models/Mensagem.js"></script>
     <script src="app/ui/views/MensagemView.js"></script>
     <script src="app/app.js"></script>
-    <script>
-        const negociacao = new Proxy(new Negociacao(new Date(), 2, 100), {
-            // get: function (target, prop, receiver) {
-            get(target, prop, receiver) {
-                console.log(`a propriedade "${prop}" caiu na armadilha!`);
-                return target[prop];
-            },
-            set(target, prop, value, receiver) {
-                console.log(`${prop} guarda ${target[prop]}, receberá ${value}`);
-                return Reflect.set(target, prop, value);
-            }
-        });
-        // armadilha será disparada, mas os valores
-        // não serão alterados, pois estão congelados
-        negociacao._quantidade = 10
-        negociacao._valor = 100;
-
-    </script>
 
 </body>
 
