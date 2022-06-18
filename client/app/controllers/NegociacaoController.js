@@ -23,11 +23,25 @@ class NegociacaoController {
   }
 
   adiciona(event) {
-    event.preventDefault();
-    this._negociacoes.adiciona(this._criaNegociacao())
-    this._mensagem.texto = 'Negociação adicionada com sucesso';
-    // não chama mais o update da view de Mensagem
-    this._limpaFormulario();
+    try {
+      event.preventDefault();
+      this._negociacoes.adiciona(this._criaNegociacao())
+      this._mensagem.texto = 'Negociação adicionada com sucesso';
+      // não chama mais o update da view de Mensagem
+      this._limpaFormulario();
+    } catch (err) {
+      console.log(err);
+      console.log(err.stack);
+      // TESTA SE O TIPO DO ERRO É DE DATA,
+      // SE FOR, EXIBE MENSAGEM PARA O USUÁRIO
+      if (err instanceof DataInvalidaException) {
+        this._mensagem.texto = err.message;
+      } else {
+        // mensagem genérica para qualquer problema que possa acontecer  
+        this._mensagem.texto = 'Um erro não esperado aconteceu. Entre em contato com o suporte';
+      }
+    }
+
   }
 
   _limpaFormulario() {
