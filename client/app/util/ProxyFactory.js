@@ -3,7 +3,7 @@ class ProxyFactory {
     return new Proxy(objeto, {
       get(target, prop, receiver) {
         // usa o array props para realizar o includes
-        if (ProxyFactory._ehFuncao(target[prop]) == typeof (Function) && props.includes(prop)) {
+        if (ProxyFactory._ehFuncao(target[prop]) && props.includes(prop)) {
           return function () {
             console.log(`"${prop}" disparou a armadilha`);
             target[prop].apply(target, arguments);
