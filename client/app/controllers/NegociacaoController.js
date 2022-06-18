@@ -7,34 +7,22 @@ class NegociacaoController {
     this._inputQuantidade = $('#quantidade');
     this._inputValor = $('#valor');
 
-    // guardando uma referência
-    // para a instância de NegociacaoController
-    const self = this;
-    this._negociacoes = new Proxy(new Negociacoes(), {
-      get(target, prop, receiver) {
-        if (typeof (target[prop]) == typeof (Function) && ['adiciona', 'esvazia']
-          .includes(prop)) {
-          return function () {
-            console.log(`"${prop}" disparou a armadilha`);
-            target[prop].apply(target, arguments);
-            // target é a instância real de Negociacoes
-            // contudo, TEREMOS PROBLEMAS AQUI!
-            // this._negociacoesView.update(target);
-            // AGORA USA SELF!
-            self._negociacoesView.update(target);
+    // criando o proxy com auxílio da nossa fábrica!
+    this._negociacoes = ProxyFactory.create(
+      new Negociacoes(),
+      ['adiciona', 'esvazia'],
+      model => this._negociacoesView.update(model));
 
-          }
-        } else {
-          return target[prop];
-        }
-      }
-    });
     // passamos para o construtor o seletor CSS de ID
     this._negociacoesView = new NegociacoesView('#negociacoes');
     // atualizando a view
     this._negociacoesView.update(this._negociacoes);
-    // instanciando o modelo!
-    this._mensagem = new Mensagem();
+    // criando o proxy com auxílio da nossa fábrica!
+    this._mensagem = ProxyFactory.create(
+      new Mensagem(),
+      ['texto'],
+      model => this._mensagemView.update(model));
+
     // nova propriedade!
     this._mensagemView = new MensagemView('#mensagemView');
     this._mensagemView.update(this._mensagem);
@@ -44,8 +32,7 @@ class NegociacaoController {
     event.preventDefault();
     this._negociacoes.adiciona(this._criaNegociacao())
     this._mensagem.texto = 'Negociação adicionada com sucesso';
-    // atualiza a view com o texto da mensagem que acabamos de atribuir
-    this._mensagemView.update(this._mensagem);
+    // não chama mais o update da view de Mensagem
     this._limpaFormulario();
   }
 
@@ -68,6 +55,6 @@ class NegociacaoController {
   apaga() {
     this._negociacoes.esvazia();
     this._mensagem.texto = 'Negociações apagadas com sucesso';
-    this._mensagemView.update(this._mensagem);
+    // não chama mais o update da view de Mensagem
   }
 }
