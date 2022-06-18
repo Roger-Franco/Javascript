@@ -7,15 +7,17 @@ class NegociacaoController {
     this._inputQuantidade = $('#quantidade');
     this._inputValor = $('#valor');
 
+    // não passamos mais "adiciona" e "esvazia" dentro de um array
     this._negociacoes = new Bind(
       new Negociacoes(),
       new NegociacoesView('#negociacoes'),
-      ['adiciona', 'esvazia']
+      'adiciona', 'esvazia'
     );
+    // não passamos mais "texto" dentro de um array
     this._mensagem = new Bind(
       new Mensagem(),
       new MensagemView('#mensagemView'),
-      ['texto']
+      'texto'
     );
 
   }
