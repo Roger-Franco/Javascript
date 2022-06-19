@@ -65,4 +65,8 @@ class NegociacaoController {
     this._mensagem.texto = 'Negociações apagadas com sucesso';
     // não chama mais o update da view de Mensagem
   }
+
+  importaNegociacoes() {
+    alert('Importando negociações');
+  }
 }

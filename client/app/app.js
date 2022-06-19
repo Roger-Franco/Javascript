@@ -10,3 +10,8 @@ document
 document
   .querySelector('#botao-apaga')
   .addEventListener('click', controller.apaga.bind(controller));
+
+// associando o evento à chamada do método
+document
+  .querySelector('#botao-importa')
+  .addEventListener('click', controller.importaNegociacoes.bind(controller))
