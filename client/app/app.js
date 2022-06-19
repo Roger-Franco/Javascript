@@ -1,17 +1,15 @@
 // criou a instância do controller
 const controller = new NegociacaoController();
 
-// associa o evento de submissão do formulário à chamada do método "adiciona"
+// criou o alias
+const $ = document.querySelector.bind(document);
 
-document
-  .querySelector('.form')
+$('.form')
   .addEventListener('submit', controller.adiciona.bind(controller));
 
-document
-  .querySelector('#botao-apaga')
+$('#botao-apaga')
   .addEventListener('click', controller.apaga.bind(controller));
 
 // associando o evento à chamada do método
-document
-  .querySelector('#botao-importa')
+$('#botao-importa')
   .addEventListener('click', controller.importaNegociacoes.bind(controller))
