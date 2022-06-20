@@ -1,35 +1,38 @@
 class NegociacaoService {
 
-  obterNegociacoesDaSemana(cb) {
-    // 0: requisição ainda não iniciada;
-    // 1: conexão com o servidor estabelecida;
-    // 2: requisição recebida;
-    //  3: processando requisição;
-    //  4: requisição está concluída e a resposta está pronta.
-    // OBS: Por esse motivo tem que ser igual a 4
+  obterNegociacoesDaSemana() {
+    return new Promise((resolve, reject) => {
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'negociacoes/semana');
+      // 0: requisição ainda não iniciada;
+      // 1: conexão com o servidor estabelecida;
+      // 2: requisição recebida;
+      //  3: processando requisição;
+      //  4: requisição está concluída e a resposta está pronta.
+      // OBS: Por esse motivo tem que ser igual a 4
 
-    xhr.onreadystatechange = () => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'negociacoes/semana');
 
-      if (xhr.readyState == 4) {
+      xhr.onreadystatechange = () => {
 
-        if (xhr.status == 200) {
+        if (xhr.readyState == 4) {
 
-          const negociacoes = JSON
-            .parse(xhr.responseText)
-            .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+          if (xhr.status == 200) {
 
-          cb(null, negociacoes);
+            const negociacoes = JSON
+              .parse(xhr.responseText)
+              .map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+            // CHAMOU RESOLVE
+            resolve(negociacoes);
 
-        } else {
-          console.log(xhr.responseText);
-          cb('Não foi possível obter nas negociações da semana', null);
+          } else {
+            // CHAMOU REJECT
+            reject('Não foi possível obter nas negociações da semana');
+          }
         }
-      }
-    };
+      };
 
-    xhr.send();
+      xhr.send();
+    })
   }
 }
