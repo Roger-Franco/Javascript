@@ -73,6 +73,8 @@ class NegociacaoController {
       .then(negociacoes => {
         // periodo ainda é um array com 3 elementos que são arrays
         negociacoes
+          .filter(novaNegociacao => !this._negociacoes.paraArray().some(negociacaoExistente =>
+            novaNegociacao.equals(negociacaoExistente)))
           .forEach(negociacao => this._negociacoes.adiciona(negociacao));
         this._mensagem.texto = 'Negociações do período importadas com sucesso';
       })

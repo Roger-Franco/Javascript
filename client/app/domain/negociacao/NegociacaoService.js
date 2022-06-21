@@ -10,14 +10,14 @@ class NegociacaoService {
       .then(
         dados =>
           dados.map(objeto =>
-            new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+            new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
         ,
-    err => {
-      // ATENÇÃO AQUI!
-      throw new Error('Não foi possível obter as negociações da semana');
+        err => {
+          // ATENÇÃO AQUI!
+          throw new Error('Não foi possível obter as negociações da semana');
 
-    }
-      )
+        }
+      );
   }
 
   obterNegociacoesDaSemanaAnterior() {
@@ -25,13 +25,13 @@ class NegociacaoService {
       .get('negociacoes/anterior')
       .then(
         dados => dados.map(objeto =>
-          new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+          new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
         ,
-    err => {
-      throw new Error('Não foi possível obter as negociações da semana anterior');
+        err => {
+          throw new Error('Não foi possível obter as negociações da semana anterior');
 
-    }
-      )
+        }
+      );
   }
 
   obterNegociacoesDaSemanaRetrasada() {
@@ -39,13 +39,13 @@ class NegociacaoService {
       .get('negociacoes/retrasada')
       .then(
         dados => dados.map(objeto =>
-          new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor));
+          new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
         ,
-    err => {
-      throw new Error('Não foi possível obter as negociações da semana retrasada');
+        err => {
+          throw new Error('Não foi possível obter as negociações da semana retrasada');
 
-    }
-      )
+        }
+      );
   }
 
   obterNegociacoesDoPeriodo() {
@@ -56,12 +56,12 @@ class NegociacaoService {
     ])
       .then(periodo => periodo
         .reduce((novoArray, item) => novoArray.concat(item), [])
-        .sort((a, b) => b.data.getTime() - a.data.getTime());
+        .sort((a, b) => b.data.getTime() - a.data.getTime())
       )
-      .catch (err => {
-      console.log(err);
+      .catch(err => {
+        console.log(err);
 
-      throw new Error('Não foi possível obter as negociações do período')
-    });
+        throw new Error('Não foi possível obter as negociações do período')
+      });
   }
 }
