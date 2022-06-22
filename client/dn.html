@@ -52,6 +52,39 @@
       request.onsuccess = e => console.log('negociação salva com sucesso');
       request.onerror = e => console.log('Não foi possível savar a negociação')
     }
+
+    function listaTodos() {
+      const negociacoes = [];
+      const cursor = connection
+        .transaction(['negociacoes'], 'readwrite')
+        .objectStore('negociacoes')
+        .openCursor();
+
+      cursor.onsuccess = e => {
+        // objeto ponteiro para uma negociação
+        const atual = e.target.result;
+        // se for diferente de null, é porque ainda há dados
+        if (atual) {
+          // cria uma nova instância antes de adicionar no array
+          const negociacao = new Negociacao(
+            atual.value._data,
+            atual.value._quantidade,
+            atual.value._valor);
+          // atual.value guarda os dados da negociação
+          negociacoes.push(atual.value);
+          // vai para a próxima posição chamando onsuccess novamente
+          atual.continue();
+        } else {
+          // quando atual for null, é porque não há mais dados
+          // imprimimos no console a lista de negociações
+          console.log(negociacoes);
+        }
+      };
+      cursor.onerror = e => {
+        // error.name, para ficar mais sucinta a informação
+        console.log('Error:' + e.target.error.name);
+      }
+    }
   </script>
   <script src="app/domain/negociacao/Negociacao.js"></script>
 </body>
