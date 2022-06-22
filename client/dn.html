@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Aprendendo IndexdDB</title>
+</head>
+
+<body>
+  <script>
+    const openRequest = indexedDB.open("jscangaceiro", 1);
+
+    // será chamada somente se o banco que estivermos nos conectando 
+    // não existir, ou quando estivermos atualizando um banco já existente
+    openRequest.onupgradeneeded = e => {
+      console.log('Cria ou altera um banco já existente');
+    }
+
+    // será chamada quando uma conexão for obtida com sucesso
+    openRequest.onsuccess = e => {
+      console.log('Conexão obtida com sucesso!');
+    }
+
+    // será chamada caso algum erro ocorra no processo de abertura da conexão
+    openRequest.onerror = e => {
+      console.log(e.target.error);
+    }
+  </script>
+</body>
+
+</html>
