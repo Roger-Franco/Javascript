@@ -3,7 +3,9 @@ const ConnectionFactory = (() => {
   const stores = ['negociacoes'];
 
   let connection = null;
-  // RETORNA A DEFINIÇÃO DA CLASSE
+
+  // VARIÁVEL QUE ARMAZENARÁ A FUNÇÃO CLOSE ORIGINAL
+  let close = null;
   return class ConnectionFactory {
     constructor() {
       throw new Error('Não é possível criar instâncias dessa classe');
@@ -19,9 +21,13 @@ const ConnectionFactory = (() => {
 
         };
         openRequest.onsuccess = e => {
-          // SÓ SERÁ EXECUTADO NA PRIMEIRA VEZ QUE A CONEXÃO FOR CRIADA
           connection = e.target.result;
-          resolve(e.target.result);
+          // GUARDANDO A FUNÇÃO ORIGINAL!
+          close = connection.close.bind(connection);
+          connection.close = () => {
+            throw new Error('Você não pode fechar diretamente a conexão');
+          }
+          resolve(connection);
         };
         openRequest.onerror = e => {
           console.log(e.target.error)
@@ -39,6 +45,15 @@ const ConnectionFactory = (() => {
 
         connection.createObjectStore(store, { autoIncrement: true });
       });
+    }
+
+    static closeConnection() {
+      if (connection) {
+        // connection.close();
+        // CHAMANDO O CLOSE ORIGINAL!
+        close();
+
+      }
     }
   }
 })()
