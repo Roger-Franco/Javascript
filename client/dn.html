@@ -8,17 +8,31 @@
 
 <body>
   <script>
+    // PRECISA SER LET PARA ACEITAR UMA NOVA ATRIBUIÇÃO
+    let connection = null;
+
     const openRequest = indexedDB.open("jscangaceiro", 1);
 
     // será chamada somente se o banco que estivermos nos conectando 
     // não existir, ou quando estivermos atualizando um banco já existente
     openRequest.onupgradeneeded = e => {
       console.log('Cria ou altera um banco já existente');
+      // obtendo a conexão!
+      connection = e.target.result;
+      // pode ser que o evento esteja sendo disparado durante uma atualização,
+      // nesse caso, verificamos se a store existe, se existir
+      // apagamos a store atual antes de criarmos uma nova
+      if (connection.objectStoreNames.contains('negociacoes')) {
+        connection.deleteObjectStore('negociacoes');
+      }
+      connection.createObjectStore('negociacoes', { autoIncrement: true });
     }
 
     // será chamada quando uma conexão for obtida com sucesso
     openRequest.onsuccess = e => {
       console.log('Conexão obtida com sucesso!');
+      connection = e.target.result
+      // e.target.result é uma instância de IDBDatabase
     }
 
     // será chamada caso algum erro ocorra no processo de abertura da conexão
