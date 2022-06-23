@@ -21,15 +21,36 @@ class NegociacaoController {
     );
 
     this._service = new NegociacaoService();
+
+    // chama o método de inicialização
+    this._init();
+  }
+
+  _init() {
+    DaoFactory
+      .getNegociacaoDao()
+      .then(dao => dao.listaTodos())
+      .then(negociacoes =>
+        negociacoes.forEach(negociacao =>
+          this._negociacoes.adiciona(negociacao)))
+      .catch(err => this._mensagem.texto = err);
   }
 
   adiciona(event) {
     try {
       event.preventDefault();
-      this._negociacoes.adiciona(this._criaNegociacao())
-      this._mensagem.texto = 'Negociação adicionada com sucesso';
-      // não chama mais o update da view de Mensagem
-      this._limpaFormulario();
+      // negociação que precisamos incluir no banco e na tabela
+      const negociacao = this._criaNegociacao();
+      DaoFactory
+        .getNegociacaoDao()
+        .then(dao => dao.adiciona(negociacao))
+        .then(() => {
+          // só tentará incluir na tabela se conseguiu antes incluir no banco
+          this._negociacoes.adiciona(negociacao)
+          this._mensagem.texto = 'Negociação adicionada com sucesso';
+          this._limpaFormulario();
+        })
+        .catch(err => this._mensagem.texto = err);
     } catch (err) {
       console.log(err);
       console.log(err.stack);
