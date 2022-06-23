@@ -23,7 +23,36 @@ class NegociacaoDao {
 
   listaTodos() {
     return new Promise((resolve, reject) => {
-      /* lidaremos com os cursos aqui */
+      const negociacoes = [];
+
+      const cursor = this._connection
+        .transaction([this._store], 'readwrite')
+        .objectStore(this._store)
+        .openCursor();
+
+      cursor.onsuccess = e => {
+        const atual = e.target.result;
+        if (atual) {
+
+          const negociacao = new Negociacao(
+            atual.value._data,
+            atual.value._quantidade,
+            atual.value._valor);
+
+          negociacoes.push(negociacao);
+          atual.continue();
+
+        } else {
+
+          // resolvendo a promise com negociacoes
+          resolve(negociacoes);
+        }
+      };
+      cursor.onerror = e => {
+        console.log(e.target.error);
+        reject('Não foi possível listar nas negociações');
+      }
+
     });
   }
 }
