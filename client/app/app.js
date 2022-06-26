@@ -1,3 +1,4 @@
+import { NegociacaoController } from './controllers/NegociacaoController'
 // criou a instância do controller
 const controller = new NegociacaoController();
 

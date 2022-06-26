@@ -1,5 +1,5 @@
 
-class Negociacao {
+export class Negociacao {
   constructor(_data, _quantidade, _valor) {
     // criando uma nova data, uma nova referência
     Object.assign(this, { _quantidade, _valor });

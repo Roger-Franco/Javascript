@@ -1,5 +1,6 @@
+import { DataInvalidaException } from './DataInvalidaException.js';
 
-class DateConverter {
+export class DateConverter {
   // As linhas abaixos são apenas para avisar que essa classe nao pode ser instanciada. O motivo 
   // é que a classe DateConverter tem métodos estáticos, o que torna desnecessária a criação de 
   // uma instância.

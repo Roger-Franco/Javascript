@@ -1,5 +1,14 @@
-
-class NegociacaoController {
+import { Negociacoes } from '../domain/negociacao/Negociacoes.js'
+import { NegociacoesView } from '../ui/views/NegociacoesView.js';
+import { Mensagem } from '../ui/models/Mensagem.js';
+import { MensagemView } from '../ui/views/MensagemView.js';
+import { NegociacaoService } from '../domain/negociacao/NegociacaoService.js';
+import { getNegociacaoDao } from '../util/DaoFactory.js';
+import { DataInvalidaException } from '../ui/converters/DataInvalidaException.js';
+import { Negociacao } from '../domain/negociacao/Negociacao.js';
+import { Bind } from '../util/Bind.js';
+import { DateConverter } from '../ui/converters/DateConverter.js';
+export class NegociacaoController {
   constructor() {
     // não vamos atribuir outor valor à variável
     const $ = document.querySelector.bind(document);

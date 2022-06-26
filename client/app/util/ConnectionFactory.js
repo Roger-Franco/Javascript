@@ -1,11 +1,9 @@
-const ConnectionFactory = (() => {
 
-  const stores = ['negociacoes'];
+const stores = ['negociacoes'];
+let connection = null;
+let close = null;
 
-  let connection = null;
-
-  // VARIÁVEL QUE ARMAZENARÁ A FUNÇÃO CLOSE ORIGINAL
-  let close = null;
+export const ConnectionFactory = (() => {
   return class ConnectionFactory {
     constructor() {
       throw new Error('Não é possível criar instâncias dessa classe');
