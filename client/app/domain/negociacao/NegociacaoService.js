@@ -1,70 +1,50 @@
-import { HttpService } from '../../util/HttpService.js';
-import { Negociacao } from './Negociacao.js';
+System.register(['../../util/HttpService.js', './Negociacao.js'], function (_export, _context) {
+  "use strict";
 
-export class NegociacaoService {
+  var HttpService, Negociacao;
+  return {
+    setters: [function (_utilHttpServiceJs) {
+      HttpService = _utilHttpServiceJs.HttpService;
+    }, function (_NegociacaoJs) {
+      Negociacao = _NegociacaoJs.Negociacao;
+    }],
+    execute: function () {
+      class NegociacaoService {
 
-  constructor() {
-    this._http = new HttpService();
-  }
-
-  obterNegociacoesDaSemana() {
-    return this._http
-      .get('negociacoes/semana')
-      .then(
-        dados =>
-          dados.map(objeto =>
-            new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
-        ,
-        err => {
-          // ATENÇÃO AQUI!
-          throw new Error('Não foi possível obter as negociações da semana');
-
+        constructor() {
+          this._http = new HttpService();
         }
-      );
-  }
 
-  obterNegociacoesDaSemanaAnterior() {
-    return this._http
-      .get('negociacoes/anterior')
-      .then(
-        dados => dados.map(objeto =>
-          new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
-        ,
-        err => {
-          throw new Error('Não foi possível obter as negociações da semana anterior');
-
+        obterNegociacoesDaSemana() {
+          return this._http.get('negociacoes/semana').then(dados => dados.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)), err => {
+            // ATENÇÃO AQUI!
+            throw new Error('Não foi possível obter as negociações da semana');
+          });
         }
-      );
-  }
 
-  obterNegociacoesDaSemanaRetrasada() {
-    return this._http
-      .get('negociacoes/retrasada')
-      .then(
-        dados => dados.map(objeto =>
-          new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
-        ,
-        err => {
-          throw new Error('Não foi possível obter as negociações da semana retrasada');
-
+        obterNegociacoesDaSemanaAnterior() {
+          return this._http.get('negociacoes/anterior').then(dados => dados.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)), err => {
+            throw new Error('Não foi possível obter as negociações da semana anterior');
+          });
         }
-      );
-  }
 
-  obterNegociacoesDoPeriodo() {
-    return Promise.all([
-      this.obterNegociacoesDaSemana(),
-      this.obterNegociacoesDaSemanaAnterior(),
-      this.obterNegociacoesDaSemanaRetrasada()
-    ])
-      .then(periodo => periodo
-        .reduce((novoArray, item) => novoArray.concat(item), [])
-        .sort((a, b) => b.data.getTime() - a.data.getTime())
-      )
-      .catch(err => {
-        console.log(err);
+        obterNegociacoesDaSemanaRetrasada() {
+          return this._http.get('negociacoes/retrasada').then(dados => dados.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)), err => {
+            throw new Error('Não foi possível obter as negociações da semana retrasada');
+          });
+        }
 
-        throw new Error('Não foi possível obter as negociações do período')
-      });
-  }
-}
+        obterNegociacoesDoPeriodo() {
+          return Promise.all([this.obterNegociacoesDaSemana(), this.obterNegociacoesDaSemanaAnterior(), this.obterNegociacoesDaSemanaRetrasada()]).then(periodo => periodo.reduce((novoArray, item) => novoArray.concat(item), []).sort((a, b) => b.data.getTime() - a.data.getTime())).catch(err => {
+            console.log(err);
+
+            throw new Error('Não foi possível obter as negociações do período');
+          });
+        }
+      }
+
+      _export('NegociacaoService', NegociacaoService);
+    }
+  };
+});
+//# sourceMappingURL=NegociacaoService.js.map

@@ -1,52 +1,59 @@
+System.register([], function (_export, _context) {
+  "use strict";
 
-var campos = [
-  document.querySelector('#data'),
-  document.querySelector('#valor'),
-  document.querySelector('#quantidade')
-];
+  var campos, tbody;
+  return {
+    setters: [],
+    execute: function () {
+      campos = [document.querySelector('#data'), document.querySelector('#valor'), document.querySelector('#quantidade')];
 
 
-console.log(campos); // verificando o conteúdo do array
+      console.log(campos); // verificando o conteúdo do array
 
-// precisamos de tbody, pois ele receberá a tr que vamos construir
-var tbody = document.querySelector('table tbody');
+      // precisamos de tbody, pois ele receberá a tr que vamos construir
+      tbody = document.querySelector('table tbody');
 
-document.querySelector('.form').addEventListener('submit', function (event) {
-  // cancelando a submissão do formulário
-  event.preventDefault();
 
-  var tr = document.createElement('tr');
+      document.querySelector('.form').addEventListener('submit', function (event) {
+        // cancelando a submissão do formulário
+        event.preventDefault();
 
-  campos.forEach(function (campo) {
+        var tr = document.createElement('tr');
 
-    // cria uma td sem informações
-    var td = document.createElement('td');
+        campos.forEach(function (campo) {
 
-    // atribui valor do campo à td
-    td.textContent = campo.value
+          // cria uma td sem informações
+          var td = document.createElement('td');
 
-    // adiciona a td na tr
-    tr.appendChild(td)
-  })
+          // atribui valor do campo à td
+          td.textContent = campo.value;
 
-  // nova td que armazenará o volume da negociação
-  var tdVolume = document.createElement('td')
+          // adiciona a td na tr
+          tr.appendChild(td);
+        });
 
-  // as posições 1 e 2 do array armazenam os campos de quantidade e valor, respectivamente
-  tdVolume.textContent = campos[1].value * campos[2].value
+        // nova td que armazenará o volume da negociação
+        var tdVolume = document.createElement('td');
 
-  // adicionando a td que faltava à tr
-  tr.appendChild(tdVolume)
+        // as posições 1 e 2 do array armazenam os campos de quantidade e valor, respectivamente
+        tdVolume.textContent = campos[1].value * campos[2].value;
 
-  // adicionando a tr
-  tbody.appendChild(tr)
+        // adicionando a td que faltava à tr
+        tr.appendChild(tdVolume);
 
-  // limpa o campo da data
-  campos[0].value = '';
-  // limpa o campo da quantidade
-  campos[1].value = 1;
-  // limpa o campo do valor
-  campos[2].value = 0;
-  // foca no campo da data
-  campos[0].focus();
-})
+        // adicionando a tr
+        tbody.appendChild(tr);
+
+        // limpa o campo da data
+        campos[0].value = '';
+        // limpa o campo da quantidade
+        campos[1].value = 1;
+        // limpa o campo do valor
+        campos[2].value = 0;
+        // foca no campo da data
+        campos[0].focus();
+      });
+    }
+  };
+});
+//# sourceMappingURL=index.js.map
