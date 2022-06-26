@@ -4,10 +4,12 @@ import { Negociacao } from './Negociacao.js';
 export class NegociacaoService {
 
   constructor() {
+
     this._http = new HttpService();
   }
 
-  obterNegociacoesDaSemana() {
+  obtemNegociacoesDaSemana() {
+
     return this._http
       .get('negociacoes/semana')
       .then(
@@ -16,14 +18,14 @@ export class NegociacaoService {
             new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
         ,
         err => {
-          // ATENÇÃO AQUI!
-          throw new Error('Não foi possível obter as negociações da semana');
 
+          throw new Error('Não foi possível obter as negociações da semana');
         }
       );
   }
 
-  obterNegociacoesDaSemanaAnterior() {
+  obtemNegociacoesDaSemanaAnterior() {
+
     return this._http
       .get('negociacoes/anterior')
       .then(
@@ -31,13 +33,14 @@ export class NegociacaoService {
           new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor))
         ,
         err => {
-          throw new Error('Não foi possível obter as negociações da semana anterior');
 
+          throw new Error('Não foi possível obter as negociações da semana anterior');
         }
       );
   }
 
-  obterNegociacoesDaSemanaRetrasada() {
+  obtemNegociacoesDaSemanaRetrasada() {
+
     return this._http
       .get('negociacoes/retrasada')
       .then(
@@ -46,24 +49,24 @@ export class NegociacaoService {
         ,
         err => {
           throw new Error('Não foi possível obter as negociações da semana retrasada');
-
         }
       );
   }
 
-  obterNegociacoesDoPeriodo() {
+  obtemNegociacoesDoPeriodo() {
+
     return Promise.all([
-      this.obterNegociacoesDaSemana(),
-      this.obterNegociacoesDaSemanaAnterior(),
-      this.obterNegociacoesDaSemanaRetrasada()
+      this.obtemNegociacoesDaSemana(),
+      this.obtemNegociacoesDaSemanaAnterior(),
+      this.obtemNegociacoesDaSemanaRetrasada()
     ])
       .then(periodo => periodo
         .reduce((novoArray, item) => novoArray.concat(item), [])
         .sort((a, b) => b.data.getTime() - a.data.getTime())
       )
       .catch(err => {
-        console.log(err);
 
+        console.log(err);
         throw new Error('Não foi possível obter as negociações do período')
       });
   }
