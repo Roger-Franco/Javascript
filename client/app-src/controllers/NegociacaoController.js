@@ -1,6 +1,6 @@
 import { Negociacoes, NegociacaoService, Negociacao } from '../domain/index.js';
-import { NegociacoesView, MensagemView, Mensagem, DataInvalidaException, DateConverter } from '../ui/index.js';
-import { getNegociacaoDao, Bind } from '../util/index.js';
+import { NegociacoesView, MensagemView, Mensagem, DateConverter } from '../ui/index.js';
+import { getNegociacaoDao, Bind, getExceptionMessage } from '../util/index.js';
 
 export class NegociacaoController {
 
@@ -36,7 +36,7 @@ export class NegociacaoController {
       negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
     } catch (err) {
       // err.message extrai apenas a mensagem de erro da exceção
-      this._mensagem.texto = err.message;
+      this._mensagem.texto = getExceptionMessage(err);
     }
   }
 
@@ -55,7 +55,7 @@ export class NegociacaoController {
 
       this._limpaFormulario();
     } catch (err) {
-      this._mensagem.texto = err.message;
+      this._mensagem.texto = getExceptionMessage(err);
     }
   }
 
@@ -90,7 +90,7 @@ export class NegociacaoController {
 
     } catch (err) {
 
-      this._mensagem.texto = err.message;
+      this._mensagem.texto = getExceptionMessage(err);
 
     }
   }
@@ -103,7 +103,7 @@ export class NegociacaoController {
       this._negociacoes.esvazia();
       this._mensagem.texto = 'Negociações apagadas com sucesso';
     } catch (err) {
-      this._mensagem.texto = err.message;
+      this._mensagem.texto = getExceptionMessage(err);
     }
   }
 }
