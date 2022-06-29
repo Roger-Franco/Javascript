@@ -1,6 +1,5 @@
 import { NegociacaoController } from './controllers/NegociacaoController'
 import { debounce } from './util/index.js';
-
 // criou a instância do controller
 const controller = new NegociacaoController();
 
@@ -15,7 +14,4 @@ $('#botao-apaga')
 
 // associando o evento à chamada do método
 $('#botao-importa')
-  .addEventListener('click', debounce(() => {
-    console.log('EXECUTOU A OPERAÇÃO DO DEBOUNCE');
-    controller.importaNegociacoes.bind(controller)
-  }, 1000))
+  .addEventListener('click', controller.importaNegociacoes.bind(controller))
